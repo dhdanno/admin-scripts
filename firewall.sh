@@ -23,7 +23,13 @@ iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Masquerading
+#iptables -t nat -A PREROUTING -d $SERVER_IP -i eth0 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 6081
+#iptables -A INPUT -p tcp -s 1.1.1.1 --dport 8081 -j ACCEPT
+#iptables -t nat -A PREROUTING -d $SERVER_IP -p tcp --dport 80 -j DNAT --to-destination $SERVER_IP:8888
 
+# Redirect public :80 to local varnish :6081
+#iptables -t nat -A POSTROUTING -j MASQUERADE
+#iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 6081
 
 # Allow incoming ssh from ANYWHERE
 iptables -A INPUT -p tcp -s 0/0 -d $SERVER_IP --sport 513:65535 --dport 22 -m state --state NEW -j ACCEPT

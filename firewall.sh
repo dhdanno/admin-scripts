@@ -1,5 +1,8 @@
 #!/bin/bash
-### Daniel Korel Firewall Script ###
+### Daniel Korel Deb Firewall Script ###
+# cp /etc/init.d/
+# chmod +x /etc/init.d/firewall.sh
+# update-rc.d firewall.sh defaults
 
 # My system IP/set ip address of server
 SERVER_IP="<change for host IP>"

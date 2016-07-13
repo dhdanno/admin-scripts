@@ -1,14 +1,23 @@
 #!/bin/bash
 
-while [[ $# -gt 1 ]]
-do
-key="$1"
-case $key in
+# Set default vars here - or pass in from command line
+JOBSERVER="jj"
+SOURCE="asd"
+DEST="asd"
+PASSWORD=""
+
+# Run with default opts
+if [ -z "$JOBSERVER" ] && [ -z "$SOURCE" ] && [ -z "$TARGET" ] && [ -z "$PASSWORD" ]; then
+
+ while [[ $# -gt 1 ]]
+ do
+ key="$1"
+ case $key in
     -s|--source)
     SOURCE="$2"
     shift # past argument
     ;;
-    -d|--destination)
+    -t|--target)
     DEST="$2"
     shift # past argument
     ;;
@@ -26,14 +35,20 @@ case $key in
     *)
             # unknown option
     ;;
-esac
-shift # past argument or value
-done
+ esac
+ shift # past argument or value
+ done	
+
+else
+
+ echo "Using Default Variables"
+
+fi
 
 echo PASSS = "$PASSWORD"
 echo JOBS  = "$JOBSERVER"
 echo DEST     = "$DEST"
-echo DEFAULT    = "$DEFAULT"
+echo SOURCE    = "$SOURCE"
 echo "Number files in SEARCH PATH with EXTENSION:" $(ls -1 "${SEARCHPATH}"/*."${EXTENSION}" | wc -l)
 
 if [[ -n $1 ]]; then
